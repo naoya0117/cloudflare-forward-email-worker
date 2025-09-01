@@ -19,7 +19,5 @@ export const validateEnv = (env: Environment): ValidatedEnv => {
             throw new Error(`${key} is not set`)
         }
 
-    }
-
     return env as ValidatedEnv;
 }
