@@ -15,7 +15,7 @@ type ValidatedEnv = {
  */
 export const validateEnv = (env: Environment): ValidatedEnv => {
     for (const [key, value] of Object.entries(env)) {
-        if (!value) {
+        if (value === undefined || value === null) {
             throw new Error(`${key} is not set`)
         }
 

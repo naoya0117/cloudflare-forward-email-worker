@@ -13,26 +13,12 @@ export const emailHandler = async(message: ForwardableEmailMessage, env: Environ
     const { FORWARD_EMAIL, FALLBACK_EMAIL } = validateEnv(env);
 
     try {
-        await forwardEmail(message, FORWARD_EMAIL);
+        await message.forward(FORWARD_EMAIL);
     } catch (error) {
         // エラーが起きたらフォールバック用のメールアドレスに転送する
         console.warn("Warning: Primary forward failed:", (error as Error).message);
-        await forwardEmail(message, FALLBACK_EMAIL);
+        await message.forward(FALLBACK_EMAIL);
     }
 
     return new Response("Email forwarded successfully", { status: 200 });
-}
-
-/**
- * メールを転送する関数
- * @param message 
- * @param email 
- */
-const forwardEmail = async(message: ForwardableEmailMessage, email: string) => {
-    try {
-        await message.forward(email);
-    } catch (error) {
-        console.warn("Warning: Forward failed:", (error as Error).message);
-        throw error;
-    }
 }
