@@ -1,7 +1,8 @@
 import { Environment } from  "../../type.d";
+import { validateEnv } from "../../utils/validatedEnv";
 
 /**
- * メールをFORWARD_EMAILに転送する関数
+ * メールをFORWARD_EMAILに転送し、エラーが起きたらFALLBACK_EMAILに転送する
  * @param message 
  * @param env 
  * @param _ctx 
@@ -9,11 +10,12 @@ import { Environment } from  "../../type.d";
  */
 export const emailHandler = async(message: ForwardableEmailMessage, env: Environment, _ctx: ExecutionContext): Promise<Response> => {
 
-    const { FORWARD_EMAIL, FALLBACK_EMAIL } = env;
+    const { FORWARD_EMAIL, FALLBACK_EMAIL } = validateEnv(env);
 
     try {
         await message.forward(FORWARD_EMAIL);
     } catch (error) {
+        // エラーが起きたらフォールバック用のメールアドレスに転送する
         console.warn("Warning: Primary forward failed:", (error as Error).message);
         await message.forward(FALLBACK_EMAIL);
     }
