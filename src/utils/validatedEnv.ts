@@ -1,4 +1,4 @@
-import { Environment } from "../type.d"
+import { Environment } from "../type.d/index.js"
 
 /**
  * バリデーション済み環境変数の型定義

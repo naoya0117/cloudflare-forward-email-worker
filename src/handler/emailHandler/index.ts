@@ -1,5 +1,5 @@
-import { Environment } from  "../../type.d";
-import { validateEnv } from "../../utils/validatedEnv";
+import { Environment } from  "../../type.d/index.js";
+import { validateEnv } from "../../utils/validatedEnv.js";
 
 /**
  * メールをFORWARD_EMAILに転送し、エラーが起きたらFALLBACK_EMAILに転送する
