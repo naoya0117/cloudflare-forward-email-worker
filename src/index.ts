@@ -6,7 +6,7 @@ export default {
     return new Response('Email handler is active', { status: 200 });
   },
 
-  async email(message: ForwardableEmailMessage, env: Environment, ctx: ExecutionContext): Promise<void> {
-    await emailHandler(message, env, ctx);
+  async email(message: ForwardableEmailMessage, env: Environment, ctx: ExecutionContext): Promise<Response> {
+    return await emailHandler(message, env, ctx);
   }
 };
