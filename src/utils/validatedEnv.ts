@@ -14,9 +14,12 @@ type ValidatedEnv = {
  * @returns バリデーション済み環境変数
  */
 export const validateEnv = (env: Environment): ValidatedEnv => {
-    for (const [key, value] of Object.entries(env)) {
-        if (value === undefined || value === null) {
-            throw new Error(`${key} is not set`)
+    const requiredKeys = ['FORWARD_EMAIL', 'FALLBACK_EMAIL'];
+    
+    for (const key of requiredKeys) {
+        const value = env[key as keyof Environment];
+        if (value === undefined || value === null || value === '') {
+            throw new Error('Email configuration is missing');
         }
     }
     return env as ValidatedEnv;
